@@ -1,10 +1,27 @@
 import Lottie from 'lottie-react';
-import React from 'react';
-import registerLottie from '../assets/lottieanimation/register.json'
+import React, { use } from 'react';
+// import registerLottie from '../assets/lottieanimation/register.json'
+import { AuthContext } from '../context/AuthContext';
 
 
 const Register = () => {
+    const {createUser}=use(AuthContext)
     console.log(Lottie)
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+        const email=e.target.email.value
+        const password=e.target.password.value
+        console.log(email,password)
+        // create User With email and password
+        createUser(email,password)
+        .then(result=>{
+            console.log(result)
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+        
+    }
     return (
         <div>
             <div className="hero bg-base-200 min-h-screen">
@@ -16,7 +33,7 @@ const Register = () => {
     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
       <div className="card-body">
            <h1 className="text-5xl font-bold">Register now!</h1>
-       <form>
+       <form onSubmit={handleSubmit}>
          <fieldset className="fieldset">
           <label className="label">Email</label>
           <input name='email' type="email" className="input" placeholder="Email" />
